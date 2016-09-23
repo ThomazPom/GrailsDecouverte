@@ -32,15 +32,27 @@
                             <input type="text" class="form-control" placeholder="Rechercher">
                         </div>
                     </form>
-                </li>
+                </li> <!-- Button trigger modal -->
+
             </ul>
+        <div class="navbar-form navbar-left">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#creerGroupeModal">
+                Groupes ✎
+            </button>
+        </div>
+
+        </div>
             <ul class="nav navbar-nav navbar-right">
-                <li></li>
+                <li>
+                    <a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
 
+
+<div id="map"></div>
 
 </body>
 </html>
