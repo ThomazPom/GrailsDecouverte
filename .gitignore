@@ -10,3 +10,5 @@ classes/
 .project
 .settings
 .classpath
+build.gradle
+grails-app/conf/application.yml
