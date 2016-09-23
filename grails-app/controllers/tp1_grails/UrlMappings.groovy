@@ -14,7 +14,7 @@ class UrlMappings {
         "404"(view:'/notFound')
 
         "/"(controller: "main")
-        "/"(controller: "gestion")
+        "/gestion"(controller: "gestion")
 
 
     }
