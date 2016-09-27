@@ -18,3 +18,12 @@
     width: 100vw;
     height: 100vh;
 }
+textarea {
+    resize: vertical;
+}
+.listSupress{
+    max-height: 20vh;
+    overflow-y:scroll ;
+    overflow-x:hidden ;
+    padding: 10px 10px 10px 10px;
+}

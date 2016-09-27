@@ -11,10 +11,10 @@
 //= require_self
 
 if (typeof jQuery !== 'undefined') {
-    (function($) {
-        $('#spinner').ajaxStart(function() {
+    (function ($) {
+        $('#spinner').ajaxStart(function () {
             $(this).fadeIn();
-        }).ajaxStop(function() {
+        }).ajaxStop(function () {
             $(this).fadeOut();
         });
     })(jQuery);
@@ -22,39 +22,56 @@ if (typeof jQuery !== 'undefined') {
 
 var map;
 var newform;
+var buttonOpenNewForm = '<a data-toggle="modal" data-target="#createPOIModal">Ajouter un POI + </a>';
 
 
 $(document).ready(function () {
+    $('form[name="gEdition"]').find("input").prop("disabled", true);
+    $('form[name="gEdition"]').find("select[name=\"selectGroupe\"]").change(function () {
+        $('form[name="gEdition"]').find("input").prop("disabled", false);
+    });
 
-    if(map = $("#map")[0]){
+    $('form[name="uEdition"]').find("input,select:not(.mainSelect)").prop("disabled", true);
+    $('form[name="uEdition"]').find("select[name=\"selectGroupe\"]").change(function () {
+        $('form[name="gEdition"]').find("input,select").prop("disabled", false);
+    });
+
+
+    $(".listSupress").on("change","input",function () {
+        if($(this).prop("checked")){
+            $(this).parent().addClass("alert alert-danger")
+        }
+        else
+        {
+            $(this).parent().removeClass("alert alert-danger")
+        }
+    });
+
+    if (map = $("#map")[0]) {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 46.856614, lng: 2.3522219000000177},
             zoom: 6
         });
 
 
-        google.maps.event.addListener(map, 'click', function(event) {
-            if(markerClick)
-            {
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (markerClick) {
                 markerClick.setMap(null);
             }
-            markerClick =  createMarkerObject(event.latLng);
+            markerClick = createMarkerObject(event.latLng);
 
-            var content =  newForm.clone();
+            newForm.find("[name='latitude']").val(event.latLng.lat());
+            newForm.find("[name='longitude']").val(event.latLng.lng());
 
-            content.find("input[name='latitude']").attr("value",event.latLng.lat);
-
-            content.find("input[name='longitude']").attr("value",event.latLng.lng);
-;
 
             var infowindow = new google.maps.InfoWindow({
-                content: content.html()
+                content: buttonOpenNewForm
             });
-                infowindow.open(map, markerClick);
-            markerClick.addListener('click', function() {
+            infowindow.open(map, markerClick);
+            markerClick.addListener('click', function () {
                 infowindow.open(map, markerClick);
             });
-            map.setCenter({lat: event.latLng.lat()+3, lng: event.latLng.lng()})
+            map.setCenter(event.latLng);
         });
 
 
@@ -68,14 +85,15 @@ $(document).ready(function () {
 var markerClick;
 
 function createMarker(lat, lng) {
-   createMarkerObject({lat: lat, lng: lng})
+    createMarkerObject({lat: lat, lng: lng})
 }
 function createMarkerObject(location) {
-   return new google.maps.Marker({
+    return new google.maps.Marker({
         position: location,
         map: map,
         title: ''
     });
 }
+
 
 

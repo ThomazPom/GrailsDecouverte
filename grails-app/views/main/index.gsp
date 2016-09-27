@@ -2,6 +2,8 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+
     <title>Points of interest manager</title>
 
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
@@ -28,6 +30,7 @@
                 <li>
 
                     <form class="navbar-form navbar-left" role="search">
+
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Rechercher">
                         </div>
@@ -39,6 +42,9 @@
         <div class="form-group">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#creerGroupeModal">
                 Groupes ✎
+            </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionUserModal">
+                Utilisateurs 👤
             </button>
         </div>
 
