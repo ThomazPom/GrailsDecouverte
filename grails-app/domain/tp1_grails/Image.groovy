@@ -1,7 +1,8 @@
 package tp1_grails
 
-class ImagePOI {
+class Image {
 
     static constraints = {
+        String localURL
     }
 }

@@ -7,8 +7,11 @@
 //
 //= require jquery-2.2.0.min
 //= require bootstrap
-//= require_tree .
+//= require jquery-ui
+
+////= require_tree .
 //= require_self
+
 
 if (typeof jQuery !== 'undefined') {
     (function ($) {
@@ -19,6 +22,25 @@ if (typeof jQuery !== 'undefined') {
         });
     })(jQuery);
 }
+
+
+$( 'form.ajax' )
+    .submit( function( e ) {
+        $.ajax( {
+            url: $(this).attr('action'),
+            data: new FormData( this ),
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST'
+        } ).done(function(data) {
+          //  alert(data);
+            data1 = data;
+                $("#infoModal").modal("show").find(".infoContainer").html($(data))
+        });
+        e.preventDefault();
+    }
+    );
 
 var map;
 var newform;
@@ -48,7 +70,7 @@ $(document).ready(function () {
     });
 
     if (map = $("#map")[0]) {
-        map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(map, {
             center: {lat: 46.856614, lng: 2.3522219000000177},
             zoom: 6
         });

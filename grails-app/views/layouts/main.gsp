@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="jquery-ui.min.css"/>
+    <asset:stylesheet src="jquery-ui.theme.min.css"/>
 
     <g:layoutHead/>
 </head>
@@ -56,7 +58,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="gCreation">
-                                <form class="container-fluid">
+                                <form name="gcreation" method="POST" action="/A_Groupe/createGroup" class="container-fluid ajax">
                                     <div class="form-group">
                                         <label>Nom du nouveau groupe</label>
                                         <input type="text" class="form-control"/>
@@ -64,7 +66,7 @@
 
                                     <div class="form-group">
                                         <label>Logo</label>
-                                        <input class="btn btn-default form-control" type="file" accept="image/*"/>
+                                        <input class="btn btn-default form-control" name="logo" type="file" accept="image/*"/>
                                     </div>
 
 
@@ -76,7 +78,7 @@
 
                             <div role="tabpanel" class="tab-pane" id="gEdition">
 
-                                <form name="gEdition" class="container-fluid">
+                                <form name="gEdition" class="container-fluid ajax">
 
                                     <div class="form-group">
 
@@ -101,7 +103,7 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="gSupression">
-                                <form name="gSupression" class="container-fluid">
+                                <form name="gSupression" class="container-fluid ajax">
                                     <ul class="list-group listSupress">
                                         <li class="list-group-item"><label>Groupe 1</label><input type="checkbox"
                                                                                                   class="checkbox"/>
@@ -154,7 +156,7 @@
 
                         <div role="tabpanel" class="tab-pane active" id="uEdition">
 
-                            <form name="uEdition" class="container-fluid">
+                            <form name="uEdition" class="container-fluid ajax">
 
                                 <div class="form-group">
 
@@ -165,10 +167,6 @@
                                 <div class="form-group">
                                     <label>Pseudo</label>
                                     <input type="text" class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <label>E-Mail</label>
-                                    <input type="email" class="form-control"/>
                                 </div>
 
                                 <div class="form-group">
@@ -183,7 +181,7 @@
                         </div>
 
                         <div role="tabpanel" class="tab-pane" id="uSupression">
-                            <form name="uSupression" class="container-fluid">
+                            <form name="uSupression" class="container-fluid ajax">
                                 <ul class="list-group listSupress">
                                     <li class="list-group-item"><label>User 1</label><input type="checkbox"
                                                                                               class="checkbox"/>
@@ -209,21 +207,33 @@
 </div>
 </div>
 
+<div class="modal fade " id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModal">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="infoContainer container-fluid">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="modal fade " id="createPOIModal" tabindex="-1" role="dialog" aria-labelledby="createPOIModal">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form name="addPOI">
+                    <form name="addPOI" class="ajax">
                         <div class="form-group">
                             <label>Nom du POI :</label>
-                            <input type="text" class="form-control" placeholder="Nom du nouveau POI">
+                            <input type="text" name="nom" class="form-control" placeholder="Nom du nouveau POI">
                         </div>
 
                         <div class="form-group">
 
-                            <label>Groupe :</label>
-                            <select class="form-control"></select>
+                            <label>Groupes :</label>
+                            <select multiple class="form-control"></select>
                         </div>
 
                         <div class="form-group">
@@ -260,6 +270,9 @@
 <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOVh1mJ-DvhZOZUsb40ehjooUTUaCa3_M">
 </script>
+
+<asset:javascript src="application.js"/>
+<asset:javascript src="jquery-ui.js"/>
 
 </body>
 </html>
