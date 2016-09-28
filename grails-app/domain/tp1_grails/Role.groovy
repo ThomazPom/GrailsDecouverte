@@ -1,4 +1,4 @@
-package domain.domain
+package tp1_grails
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString

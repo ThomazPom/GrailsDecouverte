@@ -14,7 +14,7 @@ buildscript {
 }
 
 version "0.1"
-group "tp1_grails"
+group "grailsdecouverte_v2"
 
 apply plugin:"eclipse"
 apply plugin:"idea"

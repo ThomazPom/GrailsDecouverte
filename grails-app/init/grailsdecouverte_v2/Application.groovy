@@ -1,4 +1,4 @@
-package tp1_grails
+package grailsdecouverte_v2
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

@@ -1,4 +1,4 @@
-package domain.domain
+package tp1_grails
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
@@ -18,7 +18,7 @@ class User implements Serializable {
 	boolean accountLocked
 	boolean passwordExpired
 
-	Set<Role> getAuthorities() {
+	Set<tp1_grails.Role> getAuthorities() {
 		UserRole.findAllByUser(this)*.role
 	}
 
