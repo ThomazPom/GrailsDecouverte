@@ -4,7 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 class MainController {
 
-    @Secured('permitAll')
+
+    @Secured(['isFullyAuthenticated()'])
     def index() {
 
         render(view: "index");

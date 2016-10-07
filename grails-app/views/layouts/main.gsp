@@ -9,8 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <asset:stylesheet src="application.css"/>
-    <asset:stylesheet src="jquery-ui.min.css"/>
-    <asset:stylesheet src="jquery-ui.theme.min.css"/>
 
     <g:layoutHead/>
 </head>
@@ -61,7 +59,7 @@
                                 <form name="gcreation" method="POST" action="/A_Groupe/createGroup" class="container-fluid ajax">
                                     <div class="form-group">
                                         <label>Nom du nouveau groupe</label>
-                                        <input type="text" class="form-control"/>
+                                        <input name="nom" type="text" class="form-control"/>
                                     </div>
 
                                     <div class="form-group">
