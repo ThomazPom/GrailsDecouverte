@@ -7,7 +7,6 @@ class MainController {
 
     @Secured(['isFullyAuthenticated()'])
     def index() {
-
         render(view: "index");
 
         //render 'ok'

@@ -1,49 +1,57 @@
 package tp1_grails
 
+import grails.converters.JSON
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-@EqualsAndHashCode(includes='username')
-@ToString(includes='username', includeNames=true, includePackage=false)
+@EqualsAndHashCode(includes = 'username')
+@ToString(includes = 'username', includeNames = true, includePackage = false)
 class User implements Serializable {
 
-	private static final long serialVersionUID = 1
+    private static final long serialVersionUID = 1
 
-	transient springSecurityService
+    transient springSecurityService
+    static hasMany = [pois:POI]
+    String username
+    String password
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
 
-	String username
-	String password
-	boolean enabled = true
-	boolean accountExpired
-	boolean accountLocked
-	boolean passwordExpired
+    Set<tp1_grails.Role> getAuthorities() {
+        UserRole.findAllByUser(this)*.role
+    }
 
-	Set<tp1_grails.Role> getAuthorities() {
-		UserRole.findAllByUser(this)*.role
-	}
+    def beforeInsert() {
+        encodePassword()
+    }
 
-	def beforeInsert() {
-		encodePassword()
-	}
+    def beforeUpdate() {
+        if (isDirty('password')) {
+            encodePassword()
+        }
+    }
 
-	def beforeUpdate() {
-		if (isDirty('password')) {
-			encodePassword()
-		}
-	}
+    protected void encodePassword() {
+        password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
+    }
 
-	protected void encodePassword() {
-		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
-	}
+    static transients = ['springSecurityService']
 
-	static transients = ['springSecurityService']
+    static constraints = {
+        password blank: false, password: true
+        username blank: false, unique: true
+        JSON.registerObjectMarshaller(User) {
+            def output = [:]
+            output['id'] = it.id
+            output['username'] = it.username
+            output['role'] = it.getAuthorities().first().id
+            return output;
+        }
+    }
 
-	static constraints = {
-		password blank: false, password: true
-		username blank: false, unique: true
-	}
-
-	static mapping = {
-		password column: '`password`'
-	}
+    static mapping = {
+        password column: '`password`'
+    }
 }

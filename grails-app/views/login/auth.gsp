@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta name="layout" content="main"/>
     <title>Title</title>
 
     <asset:stylesheet src="login.css"/>
+    <asset:javascript src="login.js"/>
 </head>
 <body>
-
-
 <div class="container" style="max-width:400px">
 
     <form action="/login/authenticate" method="POST" id="loginForm"  class="form-signin" autocomplete="off">
@@ -36,12 +34,15 @@
 
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
-
-
     </form>
-
+</div>
+<div class="container" id="ckusers">
+    <ul id="kusers" class="list-group">
+    </ul>
 </div>
 
+
+<div class="background"></div>
 
 
 </body>

@@ -2,20 +2,20 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 
     <title>Points of interest manager</title>
 
-    <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
+    <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 </head>
-<body>
 
+<body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -38,23 +38,28 @@
                 </li> <!-- Button trigger modal -->
 
             </ul>
-        <div class="navbar-form navbar-left">
-        <div class="form-group">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#creerGroupeModal">
-                Groupes ✎
-            </button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionUserModal">
-                Utilisateurs 👤
-            </button>
-        </div>
 
-        </div>
+            <div class="navbar-form navbar-left">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#creerGroupeModal">
+                        Groupes ✎
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionUserModal">
+                        Utilisateurs 👤
+                    </button>
+                </div>
+
+            </div>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a></li>
+                    <a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a>
+                </li>
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+
+            <div class="navbar-form navbar-right">
+                <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
 </nav>
 
 

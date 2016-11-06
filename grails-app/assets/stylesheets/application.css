@@ -15,6 +15,43 @@
 *= require_self
 */
 
+
+
+.form-group.imgContainer
+{
+    width: auto;
+    max-height:210px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin: 10px;
+}
+#infoModal
+{
+    z-index: 1500;
+}
+
+#delPOIModal
+{
+    z-index: 1400;
+}
+.removeimg{
+    font-size: xx-large;
+    color: red;
+    display: inline-block;
+    margin-left: -30px;
+}
+.imgContainer img
+{
+    max-height: 170px;
+    display: inline-block;
+}
+.imgContainer .imgItem
+{
+    display: inline-block;
+    vertical-align: middle;
+}
+
 #map{
     width: 100vw;
     height: 100vh;
@@ -27,4 +64,8 @@ textarea {
     overflow-y:scroll ;
     overflow-x:hidden ;
     padding: 10px 10px 10px 10px;
+}
+li.alert-danger{
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
