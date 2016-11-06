@@ -12,7 +12,7 @@ class A_GroupeController {
     ////static hasMany = [pois:POI]
 
 
-    @Secured(['isFullyAuthenticated()'])
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def delGroup() {
         if (params.getList("deleteGroup")) {
             List<ResponseObject> reponses = new ArrayList<>()
@@ -73,7 +73,7 @@ class A_GroupeController {
 
     }
 
-    @Secured(['isFullyAuthenticated()'])
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def majGroup() {
 
         if (params.id) {
@@ -113,7 +113,7 @@ class A_GroupeController {
 
     }
 
-    @Secured(['isFullyAuthenticated()'])
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def createGroup() {
 
         def image = Image.saveImageFromUpload(request.getPart('logo'))

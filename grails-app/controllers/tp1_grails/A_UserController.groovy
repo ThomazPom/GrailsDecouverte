@@ -11,7 +11,7 @@ class A_UserController {
 
     }
 
-    @Secured(['isFullyAuthenticated()'])
+    @Secured("hasRole('ROLE_ADMIN')")
     def delUser() {
 
         if (params.getList("deleteUser")) {
@@ -47,9 +47,9 @@ class A_UserController {
                         StringBuilder sb = new StringBuilder()
                         sb.append("Le compte "+it.getUsername()+" a été supprimé")
                         it.pois.each {
-                            sb.append("POI supprimé :"+ it.toString())
+                            sb.append("POI supprimé :"+ it.toVeryShortString())
                         }
-                        POI.deleteAll(it.pois)
+                        POI.deleteAll(it.getPois())
                         UserRole.removeAll(it);
                         User.deleteAll(it)
                         reponses.add(new ResponseObject(it.id,sb.toString(),"success"))
@@ -59,7 +59,7 @@ class A_UserController {
                         StringBuilder sb = new StringBuilder()
                         sb.append("Impossible de supprimer "+it.getUsername()+" car il possède les POI suivants :")
                         it.pois.each {
-                            sb.append(it.toString())
+                            sb.append(it.toVeryShortString())
                         }
                         response.setStatus(400)
                         reponses.add(new ResponseObject(sb.toString(),"warning"))
@@ -73,7 +73,7 @@ class A_UserController {
 
     }
 
-    @Secured(['isFullyAuthenticated()'])
+    @Secured("hasRole('ROLE_ADMIN')")
     def majUser() {
 
         if ((!params.id || !params.id.toString().isLong()) && (!params.get('selectUser') || !params.get('selectUser').toString().isLong())) {
@@ -127,7 +127,8 @@ class A_UserController {
         SecurityContextHolder.clearContext()
         redirect(controller: "main", action: "index")
     }
-    @Secured(['isFullyAuthenticated()'])
+
+    @Secured("hasRole('ROLE_ADMIN')")
     def getUsers() {
 
 
@@ -143,7 +144,8 @@ class A_UserController {
 
         render new ResponseObject(reponses) as JSON
     }
-    @Secured(['isFullyAuthenticated()'])
+
+    @Secured("hasRole('ROLE_ADMIN')")
     def getUser() {
         if (!params.id || !params.id.toString().isLong()) {
             response.setStatus(400)
@@ -161,8 +163,7 @@ class A_UserController {
         render new ResponseObject(u) as JSON
     }
 
-
-    @Secured(['isFullyAuthenticated()'])
+    @Secured("hasRole('ROLE_ADMIN')")
     def getRoles() {
         render new ResponseObject(Role.findAll()) as JSON
     }

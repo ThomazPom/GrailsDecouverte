@@ -26,7 +26,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+        <!--    <ul class="nav navbar-nav">
                 <li>
 
                     <form class="navbar-form navbar-left" role="search">
@@ -35,21 +35,30 @@
                             <input type="text" class="form-control" placeholder="Rechercher">
                         </div>
                     </form>
-                </li> <!-- Button trigger modal -->
+                </li>
 
-            </ul>
+            </ul>-->
 
-            <div class="navbar-form navbar-left">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#creerGroupeModal">
+            <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
+                <div class="navbar-form navbar-left">
+                    <div class="form-group">
+                <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#creerGroupeModal">
                         Groupes ✎
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gestionUserModal">
+                </sec:ifAnyGranted>
+
+                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#gestionUserModal">
                         Utilisateurs 👤
                     </button>
+                </sec:ifAnyGranted>
                 </div>
 
-            </div>
+        </div>
+        </sec:ifAnyGranted>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a>

@@ -23,8 +23,15 @@ class POI {
     {
 
         return (  "\n"+nom
-                + "\nLat: " + latitude
-                + "\nLng: " + longitude
-                + "\nPropriétaire: " + proprietaire.getUsername())
+                + "\n\tLat: " + latitude
+                + "\n\tLng: " + longitude
+                + "\n\tPropriétaire: " + proprietaire.getUsername())
+    }
+    public String toVeryShortString()
+    {
+
+        return (  "\n\t"+nom
+                + "\n\tLat: " + latitude
+                + "\n\tLng: " + longitude);
     }
 }

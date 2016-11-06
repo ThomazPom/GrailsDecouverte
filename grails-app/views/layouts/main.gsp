@@ -25,7 +25,7 @@
 </div>
 
 <div class="modals">
-
+<sec:ifAnyGranted roles="ROLE_MODO,ROLE_ADMIN">
     <!-- Modal -->
     <div class="modal fade " id="creerGroupeModal" tabindex="-1" role="dialog" aria-labelledby="creerGroupeModalLabel">
         <div class="modal-dialog  modal-lg" role="document">
@@ -104,7 +104,9 @@
 
                             <div role="tabpanel" class="tab-pane" id="gSupression">
                                 <form name="gSupression" callback="gSupressionCallBack" action="/A_Groupe/delGroup"
-                                      class="container-fluid ajax">
+                                      class="container-fluid ajax"><br>
+                                   <div class="form-group alert alert-danger" >
+                                    <label>Supprimer les POI qui n'ont plus de groupe également <input name="force" type="checkbox"></label></div>
                                     <ul class="list-group listSupress">
                                         <li class="list-group-item"><label>Groupe 1</label><input type="checkbox"
                                                                                                   class="checkbox"/>
@@ -129,8 +131,10 @@
         </div>
     </div>
 </div>
-
+</sec:ifAnyGranted>
 <!-- Modal -->
+
+<sec:ifAnyGranted roles="ROLE_ADMIN">
 <div class="modal fade " id="gestionUserModal" tabindex="-1" role="dialog" aria-labelledby="gestionUserModalLabel">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
@@ -183,7 +187,9 @@
 
                         <div role="tabpanel" class="tab-pane" id="uSupression">
                             <form action="/A_User/delUser/" callback="uSupressionCallback" name="uSupression"
-                                  class="container-fluid ajax">
+                                  class="container-fluid ajax"><br>
+                                <div class="form-group alert alert-danger" >
+                                    <label>Supprimer les POI de l'utilisateur également  <input name="force" type="checkbox"></label></div>
                                 <ul class="list-group listSupress">
                                     <li class="list-group-item"><label>User 1</label><input type="checkbox"
                                                                                             class="checkbox"/>
@@ -208,7 +214,7 @@
     </div>
 </div>
 </div>
-
+</sec:ifAnyGranted>
 <div class="modal fade " id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModal">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -234,14 +240,14 @@
 
             <div class="modal-body">
                 <div class="alert alert-danger">
-                    Voulez vous vraiment supprimer le POI : <b id="#confirmDeletePOIName"></b>
+                    Voulez vous vraiment supprimer le POI : <b id="confirmDeletePOIName"></b>
 
                 </div>
 
                 <div class="modal-footer">
 
                     <form action="/a_POI/delPOI" name="delPOI" callback="delPOICallback" class="ajax">
-                        <input class="paramId">
+                        <input type="hidden" class="paramId">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
                         <input value="Oui" type="submit" class="btn btn-danger"/>
                     </form>

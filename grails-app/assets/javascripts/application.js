@@ -104,7 +104,9 @@ $(document).ready(function () {
         var id = Number.isInteger(idDel) ? idDel : $(this).data("id");
         var form = $("form[name='delPOI']");
         form.find(".paramId").val(id);
-        $("#delPOIModal").modal("show").find("#confirmDeletePOIName").text(nom ? nom : $(this).data("nom"));
+        console.log((typeof nom === 'string' || nom instanceof String) ? nom : $(this).data("nom"));
+
+        $("#delPOIModal").modal("show").find("#confirmDeletePOIName").html((typeof nom === 'string' || nom instanceof String) ? nom : $(this).data("nom"));
     }
 
     openmarkeredit = function (idEdit) {
@@ -124,9 +126,9 @@ $(document).ready(function () {
             form.find("[name='description']").val(data.data.description);
 
 
-            var buttonDel = form.find("#delPOIButton");
+            var buttonDel = $("#delPOIButton");
             buttonDel.data("id", data.data.id);
-            buttonDel.data("nom", data.data);
+            buttonDel.data("nom", data.data.nom);
 
 
             JSONGet('/A_Groupe/getGroupes', null, function (dataGet) {
@@ -246,9 +248,10 @@ $(document).ready(function () {
                     }
 
                     if (!form.hasClass("nomodal")) {
+
                         var infocontainer = $("#infoModal").modal("show").find(".infoContainer").html($('<div>', {
-                            class: "alert alert-" + data.status,
-                            text: data.message
+                            class: "alert alert-" + data.status||"",
+                            html: data.message?data.message.replace(new RegExp("\n", 'g'), "<br>"):""
                         }))
                     }
 
@@ -257,9 +260,9 @@ $(document).ready(function () {
                         if (Array.isArray(data)) {
                             $(data).each(function () {
                                 infocontainer.append($('<div>', {
-                                    class: "alert alert-" + this.status,
-                                    text: this.message
-                                }))
+                                    class: "alert alert-" + this.status||"",
+                                    html: this.message?this.message.replace(new RegExp("\n", 'g'), "<br>"):""
+                                }));
                                 fillContainer(this.data);
                             })
 
@@ -366,7 +369,9 @@ $(document).ready(function () {
     });
 
     $('form[name="delPOI"]').on("delPOICallback", function (event, data) {
-        $("#delPOIModal").modal.hide();
+        $("#delPOIModal").modal("hide");
+
+        $("#majPOIModal").modal("hide");
         markerDelete.setMap(null);
     });
 
@@ -395,6 +400,8 @@ $(document).ready(function () {
         markerClick.setMap(null);
         $("#createPOIModal").modal("hide");
         createMarker(data.data.latitude, data.data.longitude, data.data.id).addListener('click', openmarkerview);
+        openmarkerview(data.data.id);
+        $(this).find(".imgContainer").empty();
 
     });
 
