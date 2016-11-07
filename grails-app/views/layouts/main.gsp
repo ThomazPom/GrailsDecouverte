@@ -105,8 +105,11 @@
                             <div role="tabpanel" class="tab-pane" id="gSupression">
                                 <form name="gSupression" callback="gSupressionCallBack" action="/A_Groupe/delGroup"
                                       class="container-fluid ajax"><br>
-                                   <div class="form-group alert alert-danger" >
-                                    <label>Supprimer les POI qui n'ont plus de groupe également <input name="force" type="checkbox"></label></div>
+
+                                    <div class="form-group alert alert-danger">
+                                        <label>Supprimer les POI qui n'ont plus de groupe également <input name="force"
+                                                                                                           type="checkbox">
+                                        </label></div>
                                     <ul class="list-group listSupress">
                                         <li class="list-group-item"><label>Groupe 1</label><input type="checkbox"
                                                                                                   class="checkbox"/>
@@ -130,90 +133,122 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 </sec:ifAnyGranted>
 <!-- Modal -->
 
 <sec:ifAnyGranted roles="ROLE_ADMIN">
-<div class="modal fade " id="gestionUserModal" tabindex="-1" role="dialog" aria-labelledby="gestionUserModalLabel">
-    <div class="modal-dialog  modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gestionUserModalLabel">Gestion des utilisateurs 👤</h4>
-            </div>
-
-            <div class="modal-body">
-                <div>
-
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#uEdition" aria-controls="profile" role="tab"
-                                                                  data-toggle="tab">Edition</a></li>
-                        <li role="presentation"><a href="#uSupression" aria-controls="messages" role="tab"
-                                                   data-toggle="tab">Suppression</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-
-                        <div role="tabpanel" class="tab-pane active" id="uEdition">
-
-                            <form callback="uEditionCallBack" action="/A_User/majUser/" name="uEdition"
-                                  class="container-fluid ajax">
-
-                                <div class="form-group">
-
-                                    <label>Utilisateur à éditer</label>
-                                    <select name="selectUser" class="form-control mainSelect"></select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Pseudo</label>
-                                    <input type="text" name="username" class="form-control"/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <select name="selectRole" class="form-control"></select>
-                                </div>
-
-                                <input type="submit" class="pull-right btn btn-primary"
-                                       value="Enregistrer"/>
-                            </form>
-
-                        </div>
-
-                        <div role="tabpanel" class="tab-pane" id="uSupression">
-                            <form action="/A_User/delUser/" callback="uSupressionCallback" name="uSupression"
-                                  class="container-fluid ajax"><br>
-                                <div class="form-group alert alert-danger" >
-                                    <label>Supprimer les POI de l'utilisateur également  <input name="force" type="checkbox"></label></div>
-                                <ul class="list-group listSupress">
-                                    <li class="list-group-item"><label>User 1</label><input type="checkbox"
-                                                                                            class="checkbox"/>
-
-                                    </li>
-
-                                </ul>
-
-                                <input type="submit" class="pull-right btn btn-danger"
-                                       value="Supprimer les utilisateurs sélectionnés"/>
-                            </form>
-                        </div>
-                    </div>
-
+    <div class="modal fade " id="gestionUserModal" tabindex="-1" role="dialog" aria-labelledby="gestionUserModalLabel">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gestionUserModalLabel">Gestion des utilisateurs 👤</h4>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <div class="modal-body">
+                    <div>
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#uEdition" aria-controls="profile"
+                                                                      role="tab"
+                                                                      data-toggle="tab">Edition</a></li>
+
+                            <li role="presentation"><a href="#uCreation" aria-controls="profile"
+                                                       role="tab"
+                                                       data-toggle="tab">Creation</a></li>
+                            <li role="presentation"><a href="#uSupression" aria-controls="messages" role="tab"
+                                                       data-toggle="tab">Suppression</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+
+                            <div role="tabpanel" class="tab-pane active" id="uEdition">
+
+                                <form callback="uEditionCallBack" action="/A_User/majUser/" name="uEdition"
+                                      class="container-fluid ajax">
+
+                                    <div class="form-group">
+
+                                        <label>Utilisateur à éditer</label>
+                                        <select name="selectUser" class="form-control mainSelect"></select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Pseudo</label>
+                                        <input type="text" name="username" class="form-control"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <select name="selectRole" class="form-control"></select>
+                                    </div>
+
+                                    <input type="submit" class="pull-right btn btn-primary"
+                                           value="Enregistrer"/>
+                                </form>
+
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="uCreation">
+
+                                <form callback="uCreationCallBack" action="/A_User/createUser/" name="uCreation"
+                                      class="container-fluid ajax reset">
+                                    <div class="form-group">
+                                        <label>Pseudo</label>
+                                        <input type="text" name="username" class="form-control"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Mot de passe</label>
+                                        <input type="password" name="password" class="form-control"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <select name="selectRole" class="form-control"></select>
+                                    </div>
+
+                                    <input type="submit" class="pull-right btn btn-primary"
+                                           value="Enregistrer"/>
+                                </form>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="uSupression">
+                                <form action="/A_User/delUser/" callback="uSupressionCallback" name="uSupression"
+                                      class="container-fluid ajax"><br>
+
+                                    <div class="form-group alert alert-danger">
+                                        <label>Supprimer les POI de l'utilisateur également  <input name="force"
+                                                                                                    type="checkbox">
+                                        </label></div>
+                                    <ul class="list-group listSupress">
+                                        <li class="list-group-item"><label>User 1</label><input type="checkbox"
+                                                                                                class="checkbox"/>
+
+                                        </li>
+
+                                    </ul>
+
+                                    <input type="submit" class="pull-right btn btn-danger"
+                                           value="Supprimer les utilisateurs sélectionnés"/>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
 </sec:ifAnyGranted>
 <div class="modal fade " id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModal">
     <div class="modal-dialog modal-sm" role="document">

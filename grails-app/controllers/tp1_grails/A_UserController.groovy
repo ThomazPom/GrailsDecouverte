@@ -7,8 +7,64 @@ import utils.ResponseObject
 
 class A_UserController {
 
+
+    @Secured("hasRole('ROLE_ADMIN')")
     def createUser() {
 
+        def username = params.get("username")
+        if (!username) {
+            response.setStatus(400)
+
+            render new ResponseObject("Aucun nom d'utilisateur n'a été fourni ", "danger") as JSON
+            return
+        }
+        if (params.get("username").toString().trim().isEmpty()) {
+
+            response.setStatus(400)
+            render new ResponseObject("Le nom d'utilisateur ne peut pas être vide", "warning") as JSON
+            return
+        }
+        def password = params.get("password")
+        if (!password) {
+
+            response.setStatus(400)
+            render new ResponseObject("Aucun mot de passe n'a été fourni ", "danger") as JSON
+            return
+        }
+        def userExist = User.findByUsername(username)
+        if(userExist){
+
+            response.setStatus(400)
+            render new ResponseObject("Ce nom d'utilisateur n'est pas disponible", "warning") as JSON
+            return
+        }
+        if (params.get("password").toString().trim().isEmpty()) {
+
+            response.setStatus(400)
+            render new ResponseObject("Le mot de passe ne peut pas être vide", "warning") as JSON
+            return
+        }
+
+
+        User u = new User(username: username.toString(), password: password.toString()).save(flush:true)
+        if (params.get("selectRole") && params.get("selectRole").toString().isLong()) {
+            Role r = Role.findById(params.get("selectRole").toString().toLong())
+            if (r) {
+                UserRole.create(u, r)
+                render new ResponseObject("L'utilisateur a été créé avec succès", "success") as JSON
+                return
+            } else {
+                u.delete()
+                response.setStatus(400)
+                render new ResponseObject("Ce role n'existe pas", "danger")
+                return
+            }
+
+        }
+
+        response.setStatus(400)
+        render new ResponseObject("Aucun role n'a été fourni ", "danger")
+        return
     }
 
     @Secured("hasRole('ROLE_ADMIN')")
@@ -38,31 +94,27 @@ class A_UserController {
 
                 reponses.add(new ResponseObject("Aucun id valide n'a été fourni", "warning"))
                 response.setStatus(400)
-            }
-            else
-            {
+            } else {
                 users.each {
-                    if(it.pois.isEmpty() || params.get("force"))
-                    {
+                    if (it.pois.isEmpty() || params.get("force")) {
                         StringBuilder sb = new StringBuilder()
-                        sb.append("Le compte "+it.getUsername()+" a été supprimé")
+                        sb.append("Le compte " + it.getUsername() + " a été supprimé")
                         it.pois.each {
-                            sb.append("POI supprimé :"+ it.toVeryShortString())
+                            sb.append("POI supprimé :" + it.toVeryShortString())
                         }
                         POI.deleteAll(it.getPois())
                         UserRole.removeAll(it);
                         User.deleteAll(it)
-                        reponses.add(new ResponseObject(it.id,sb.toString(),"success"))
+                        reponses.add(new ResponseObject(it.id, sb.toString(), "success"))
 
-                    }
-                    else{
+                    } else {
                         StringBuilder sb = new StringBuilder()
-                        sb.append("Impossible de supprimer "+it.getUsername()+" car il possède les POI suivants :")
+                        sb.append("Impossible de supprimer " + it.getUsername() + " car il possède les POI suivants :")
                         it.pois.each {
                             sb.append(it.toVeryShortString())
                         }
                         response.setStatus(400)
-                        reponses.add(new ResponseObject(sb.toString(),"warning"))
+                        reponses.add(new ResponseObject(sb.toString(), "warning"))
                     }
                 }
             }
@@ -134,12 +186,13 @@ class A_UserController {
 
         render new ResponseObject(User.findAll()) as JSON
     }
+
     @Secured(['permitAll'])
     def getPublicUsers() {
         Set<User> user = User.findAll();
         List<ResponseObject> reponses = new ArrayList<>()
         user.each {
-            reponses.add(new ResponseObject( [it.getUsername(),it.getAuthorities().first().getAuthority() ] as String[]))
+            reponses.add(new ResponseObject([it.getUsername(), it.getAuthorities().first().getAuthority()] as String[]))
         }
 
         render new ResponseObject(reponses) as JSON

@@ -305,6 +305,24 @@ $(document).ready(function () {
     );
 
 
+    $("a[href='#uCreation']").click(function () {
+
+        var form = $('form[name="uCreation"]');
+        var selectRoles = form.find("select[name='selectRole']");
+
+        selectRoles.empty();
+        JSONGet("/A_User/getRoles/", null, function (data) {
+
+            $(data.data).each(function () {
+                selectRoles.append($('<option>', {
+                    value: this.id,
+                    text: this.id + " - " + this.authority
+                }));
+            });
+        });
+
+    });
+
     $("[data-target='#gestionUserModal'],a[href='#uEdition']").click(function () {
 
         var form = $('form[name="uEdition"]');
