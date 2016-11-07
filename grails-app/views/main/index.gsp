@@ -65,9 +65,18 @@
                 </li>
             </ul>
 
-            <div class="navbar-form navbar-right">
-                <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
-            </div><!-- /.navbar-collapse -->
+        <ul class="nav navbar-nav navbar-right">
+
+            <li>
+
+                <div class="navbar-form">
+                    <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
+
+                </div><!-- /.navbar-collapse -->
+            </li>
+        </ul>
+
+        <a class="navbar-brand navbar-right">${sec.loggedInUserInfo(field: 'username')}</a>
         </div><!-- /.container-fluid -->
 </nav>
 
