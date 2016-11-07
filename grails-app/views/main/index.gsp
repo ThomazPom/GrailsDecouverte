@@ -39,7 +39,6 @@
 
             </ul>-->
 
-            <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
                 <div class="navbar-form navbar-left">
                     <div class="form-group">
                         <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
@@ -55,10 +54,16 @@
                                 Utilisateurs 👤
                             </button>
                         </sec:ifAnyGranted>
+
+                        <sec:ifAnyGranted roles="ROLE_USER">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#listGroupModal">
+                                Liste des groupes
+                            </button>
+                        </sec:ifAnyGranted>
                     </div>
 
                 </div>
-            </sec:ifAnyGranted>
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a></li>

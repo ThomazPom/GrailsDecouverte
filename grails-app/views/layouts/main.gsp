@@ -47,6 +47,9 @@
                                                        data-toggle="tab">Edition</a></li>
                             <li role="presentation"><a href="#gSupression" aria-controls="messages" role="tab"
                                                        data-toggle="tab">Suppression</a></li>
+
+                            <li role="presentation"><a href="#gList" aria-controls="messages" role="tab"
+                                                       data-toggle="tab">Liste</a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -121,6 +124,11 @@
                                     <input type="submit" class="pull-right btn btn-danger"
                                            value="Supprimer les groupes sélectionnés"/>
                                 </form>
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane" id="gList">
+                                <br>  
+                                <ul class="list-group" id="listGroupView"></ul>
                             </div>
                         </div>
 
@@ -263,7 +271,25 @@
 
 </div>
 
+<sec:ifAnyGranted roles="ROLE_USER">
+    <div class="modal fade " id="listGroupModal" tabindex="-1" role="dialog" aria-labelledby="listGroupModal">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="listGroupModalLabel">Liste des groupes</h4>
+                </div>
+
+                <div class="modal-body">
+                    <ul class="list-group" id="listGroupView"></ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</sec:ifAnyGranted>
 <div class="modal fade " id="delPOIModal" tabindex="-1" role="dialog" aria-labelledby="delPOIModal">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

@@ -571,6 +571,21 @@ $("a[href='#gEdition']").click(function (event, eventData) {
     })
 });
 
+    if($("#listGroupView").size()>0){
+    JSONGet('/A_Groupe/getGroupes', null, function (data) {
+        var ul = $('#listGroupView').empty();
+
+        $(data.data).each(function () {
+            ul.append('<li class="list-group-item"><label>' + this.nom + '</label></li>');
+        })
+        if($(data.data).size()==0)
+        {
+            ul.append('<li class="list-group-item">Aucun groupe à afficher</li>');
+
+        }
+
+    });
+}
 
 $("a[href='#gSupression']").click(function () {
 
