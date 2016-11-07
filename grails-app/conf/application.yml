@@ -22,6 +22,10 @@ environments:
 ---
 ---
 grails:
+    controllers:
+        upload:
+            maxFileSize: 20000000
+            maxRequestSize: 20000000
     profile: web
     codegen:
         defaultPackage: tp1_grails
