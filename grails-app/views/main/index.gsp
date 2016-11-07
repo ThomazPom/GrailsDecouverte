@@ -42,41 +42,39 @@
             <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
                 <div class="navbar-form navbar-left">
                     <div class="form-group">
-                <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#creerGroupeModal">
-                        Groupes ✎
-                    </button>
-                </sec:ifAnyGranted>
+                        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_MODO">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#creerGroupeModal">
+                                Groupes ✎
+                            </button>
+                        </sec:ifAnyGranted>
 
-                <sec:ifAnyGranted roles="ROLE_ADMIN">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#gestionUserModal">
-                        Utilisateurs 👤
-                    </button>
-                </sec:ifAnyGranted>
+                        <sec:ifAnyGranted roles="ROLE_ADMIN">
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#gestionUserModal">
+                                Utilisateurs 👤
+                            </button>
+                        </sec:ifAnyGranted>
+                    </div>
+
                 </div>
-
-        </div>
-        </sec:ifAnyGranted>
+            </sec:ifAnyGranted>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a>
                 </li>
             </ul>
 
-        <ul class="nav navbar-nav navbar-right">
+                    <div class="navbar-form">
+                        <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
 
-            <li>
+                    </div><!-- /.navbar-collapse -->
 
-                <div class="navbar-form">
-                    <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
-
-                </div><!-- /.navbar-collapse -->
-            </li>
-        </ul>
-
-        <a class="navbar-brand navbar-right">${sec.loggedInUserInfo(field: 'username')}</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="navbar-brand navbar-right">${sec.loggedInUserInfo(field: 'username')}</a>
+                </li>
+            </ul>
         </div><!-- /.container-fluid -->
 </nav>
 
