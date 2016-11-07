@@ -153,7 +153,7 @@ class A_UserController {
 
 
         List<ResponseObject> reponses = new ArrayList<>()
-        if (!currrole.equals(AppConfig.roleModo) && params.get("selectRole") && params.get("selectRole").toString().isLong()) {
+            if (!currrole.equals(AppConfig.roleModo) && params.get("selectRole") && params.get("selectRole").toString().isLong()) {
             Role r = Role.findById(Integer.parseInt(params.get("selectRole").toString()))
             if (r) {
                 if (!r.equals(AppConfig.roleUser) && currrole.equals(AppConfig.roleModo)) {
