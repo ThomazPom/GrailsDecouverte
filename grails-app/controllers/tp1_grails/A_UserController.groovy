@@ -150,18 +150,10 @@ class A_UserController {
         Role currrole = crrru.getAuthorities().first()
 
 
+
+
         List<ResponseObject> reponses = new ArrayList<>()
-        if (params.get("username")) {
-            if (params.get("username").toString().isEmpty()) {
-                reponses.add(new ResponseObject("Le nom d'utilisateur ne peut pas etre vide", "warning"))
-            } else {
-                u.setUsername(params.get("username").toString())
-                reponses.add(new ResponseObject("Le nom d'utilisateur a été modifié avec succès", "success"))
-            }
-        } else {
-            reponses.add(new ResponseObject("Le nom d'utilisateur ne peut pas etre vide", "warning"))
-        }
-        if (params.get("selectRole") && params.get("selectRole").toString().isLong()) {
+        if (!currrole.equals(AppConfig.roleModo) && params.get("selectRole") && params.get("selectRole").toString().isLong()) {
             Role r = Role.findById(Integer.parseInt(params.get("selectRole").toString()))
             if (r) {
                 if (!r.equals(AppConfig.roleUser) && currrole.equals(AppConfig.roleModo)) {
@@ -176,6 +168,24 @@ class A_UserController {
                 reponses.add(new ResponseObject("Ce role n'existe pas", "danger"))
             }
 
+        }
+
+        if (currrole.equals(AppConfig.roleModo)) {
+            if (!u.getAuthorities().first().equals(AppConfig.roleUser)) {
+                response.setStatus(403)
+                render new ResponseObject("Edition de cet utilisateur non autorisée", "danger") as JSON
+                return
+            }
+        }
+        if (params.get("username")) {
+            if (params.get("username").toString().isEmpty()) {
+                reponses.add(new ResponseObject("Le nom d'utilisateur ne peut pas etre vide", "warning"))
+            } else {
+                u.setUsername(params.get("username").toString())
+                reponses.add(new ResponseObject("Le nom d'utilisateur a été modifié avec succès", "success"))
+            }
+        } else {
+            reponses.add(new ResponseObject("Le nom d'utilisateur ne peut pas etre vide", "warning"))
         }
 
         u.save(flush: true)
