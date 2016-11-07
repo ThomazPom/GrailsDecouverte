@@ -59,23 +59,20 @@
 
                 </div>
             </sec:ifAnyGranted>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a>
-                </li>
-            </ul>
-
-                    <div class="navbar-form">
-                        <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
-
-                    </div><!-- /.navbar-collapse -->
 
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="navbar-brand navbar-right">${sec.loggedInUserInfo(field: 'username')}</a>
-                </li>
+                <li><a class="navbar-brand" href="#">Devs : Lavoisier / Benhamou</a></li>
             </ul>
-        </div><!-- /.container-fluid -->
+
+            <div class="navbar-form navbar-right">
+                <a href="/A_User/logout" class="btn btn-danger">Déconnexion</a>
+            </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="navbar-brand navbar-right">${sec.loggedInUserInfo(field: 'username')}</a></li>
+        </ul>
+        </div>
+    </div><!-- /.container-fluid -->
 </nav>
 
 
