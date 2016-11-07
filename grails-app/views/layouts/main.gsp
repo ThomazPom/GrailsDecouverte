@@ -127,7 +127,7 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="gList">
-                                <br>  
+                                <br>
                                 <ul class="list-group" id="listGroupView"></ul>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
 </sec:ifAnyGranted>
 <!-- Modal -->
 
-<sec:ifAnyGranted roles="ROLE_ADMIN">
+<sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
     <div class="modal fade " id="gestionUserModal" tabindex="-1" role="dialog" aria-labelledby="gestionUserModalLabel">
         <div class="modal-dialog  modal-lg" role="document">
             <div class="modal-content">
@@ -164,11 +164,14 @@
                                                                       role="tab"
                                                                       data-toggle="tab">Edition</a></li>
 
-                            <li role="presentation"><a href="#uCreation" aria-controls="profile"
-                                                       role="tab"
-                                                       data-toggle="tab">Creation</a></li>
-                            <li role="presentation"><a href="#uSupression" aria-controls="messages" role="tab"
-                                                       data-toggle="tab">Suppression</a></li>
+
+                            <sec:ifAnyGranted roles="ROLE_ADMIN">
+                                <li role="presentation"><a href="#uCreation" aria-controls="profile"
+                                                           role="tab"
+                                                           data-toggle="tab">Creation</a></li>
+                                <li role="presentation"><a href="#uSupression" aria-controls="messages" role="tab"
+                                                           data-toggle="tab">Suppression</a></li>
+                            </sec:ifAnyGranted>
                         </ul>
 
                         <!-- Tab panes -->
@@ -201,50 +204,53 @@
 
                             </div>
 
-                            <div role="tabpanel" class="tab-pane" id="uCreation">
+                            <sec:ifAnyGranted roles="ROLE_ADMIN">
 
-                                <form callback="uCreationCallBack" action="/A_User/createUser/" name="uCreation"
-                                      class="container-fluid ajax reset">
-                                    <div class="form-group">
-                                        <label>Pseudo</label>
-                                        <input type="text" name="username" class="form-control"/>
-                                    </div>
+                                <div role="tabpanel" class="tab-pane" id="uCreation">
 
-                                    <div class="form-group">
-                                        <label>Mot de passe</label>
-                                        <input type="password" name="password" class="form-control"/>
-                                    </div>
+                                    <form callback="uCreationCallBack" action="/A_User/createUser/" name="uCreation"
+                                          class="container-fluid ajax reset">
+                                        <div class="form-group">
+                                            <label>Pseudo</label>
+                                            <input type="text" name="username" class="form-control"/>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label>Role</label>
-                                        <select name="selectRole" class="form-control"></select>
-                                    </div>
+                                        <div class="form-group">
+                                            <label>Mot de passe</label>
+                                            <input type="password" name="password" class="form-control"/>
+                                        </div>
 
-                                    <input type="submit" class="pull-right btn btn-primary"
-                                           value="Enregistrer"/>
-                                </form>
-                            </div>
+                                        <div class="form-group">
+                                            <label>Role</label>
+                                            <select name="selectRole" class="form-control"></select>
+                                        </div>
 
-                            <div role="tabpanel" class="tab-pane" id="uSupression">
-                                <form action="/A_User/delUser/" callback="uSupressionCallback" name="uSupression"
-                                      class="container-fluid ajax"><br>
+                                        <input type="submit" class="pull-right btn btn-primary"
+                                               value="Enregistrer"/>
+                                    </form>
+                                </div>
 
-                                    <div class="form-group alert alert-danger">
-                                        <label>Supprimer les POI de l'utilisateur également  <input name="force"
-                                                                                                    type="checkbox">
-                                        </label></div>
-                                    <ul class="list-group listSupress">
-                                        <li class="list-group-item"><label>User 1</label><input type="checkbox"
-                                                                                                class="checkbox"/>
+                                <div role="tabpanel" class="tab-pane" id="uSupression">
+                                    <form action="/A_User/delUser/" callback="uSupressionCallback" name="uSupression"
+                                          class="container-fluid ajax"><br>
 
-                                        </li>
+                                        <div class="form-group alert alert-danger">
+                                            <label>Supprimer les POI de l'utilisateur également  <input name="force"
+                                                                                                        type="checkbox">
+                                            </label></div>
+                                        <ul class="list-group listSupress">
+                                            <li class="list-group-item"><label>User 1</label><input type="checkbox"
+                                                                                                    class="checkbox"/>
 
-                                    </ul>
+                                            </li>
 
-                                    <input type="submit" class="pull-right btn btn-danger"
-                                           value="Supprimer les utilisateurs sélectionnés"/>
-                                </form>
-                            </div>
+                                        </ul>
+
+                                        <input type="submit" class="pull-right btn btn-danger"
+                                               value="Supprimer les utilisateurs sélectionnés"/>
+                                    </form>
+                                </div>
+                            </sec:ifAnyGranted>
                         </div>
 
                     </div>

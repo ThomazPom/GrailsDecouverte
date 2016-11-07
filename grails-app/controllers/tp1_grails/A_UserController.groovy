@@ -3,6 +3,7 @@ package tp1_grails
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.security.core.context.SecurityContextHolder
+import utils.AppConfig
 import utils.ResponseObject
 
 class A_UserController {
@@ -32,7 +33,7 @@ class A_UserController {
             return
         }
         def userExist = User.findByUsername(username)
-        if(userExist){
+        if (userExist) {
 
             response.setStatus(400)
             render new ResponseObject("Ce nom d'utilisateur n'est pas disponible", "warning") as JSON
@@ -46,7 +47,7 @@ class A_UserController {
         }
 
 
-        User u = new User(username: username.toString(), password: password.toString()).save(flush:true)
+        User u = new User(username: username.toString(), password: password.toString()).save(flush: true)
         if (params.get("selectRole") && params.get("selectRole").toString().isLong()) {
             Role r = Role.findById(params.get("selectRole").toString().toLong())
             if (r) {
@@ -125,7 +126,7 @@ class A_UserController {
 
     }
 
-    @Secured("hasRole('ROLE_ADMIN')")
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def majUser() {
 
         if ((!params.id || !params.id.toString().isLong()) && (!params.get('selectUser') || !params.get('selectUser').toString().isLong())) {
@@ -144,6 +145,11 @@ class A_UserController {
             return
         }
 
+
+        User crrru = springSecurityService.currentUser
+        Role currrole = crrru.getAuthorities().first()
+
+
         List<ResponseObject> reponses = new ArrayList<>()
         if (params.get("username")) {
             if (params.get("username").toString().isEmpty()) {
@@ -158,9 +164,13 @@ class A_UserController {
         if (params.get("selectRole") && params.get("selectRole").toString().isLong()) {
             Role r = Role.findById(Integer.parseInt(params.get("selectRole").toString()))
             if (r) {
-                UserRole.removeAll(u)
-                UserRole.create(u, r)
-                reponses.add(new ResponseObject("Le role de l'utilisateur a été modifié avec succès", "success"))
+                if (!r.equals(AppConfig.roleUser) && currrole.equals(AppConfig.roleModo)) {
+                    reponses.add(new ResponseObject("Opération non autorisée", "danger"))
+                } else {
+                    UserRole.removeAll(u)
+                    UserRole.create(u, r)
+                    reponses.add(new ResponseObject("Le role de l'utilisateur a été modifié avec succès", "success"))
+                }
             } else {
 
                 reponses.add(new ResponseObject("Ce role n'existe pas", "danger"))
@@ -180,9 +190,19 @@ class A_UserController {
         redirect(controller: "main", action: "index")
     }
 
-    @Secured("hasRole('ROLE_ADMIN')")
+    def springSecurityService
+
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def getUsers() {
 
+
+        User u = springSecurityService.currentUser
+
+        Role role = u.getAuthorities().first()
+        if (role.equals(AppConfig.roleModo)) {
+            render new ResponseObject(UserRole.findAllByRole(AppConfig.roleUser).user) as JSON
+            return
+        }
 
         render new ResponseObject(User.findAll()) as JSON
     }
@@ -198,7 +218,7 @@ class A_UserController {
         render new ResponseObject(reponses) as JSON
     }
 
-    @Secured("hasRole('ROLE_ADMIN')")
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def getUser() {
         if (!params.id || !params.id.toString().isLong()) {
             response.setStatus(400)
@@ -206,18 +226,41 @@ class A_UserController {
             return
         }
 
+        User curru = springSecurityService.currentUser
 
         User u = User.findById(params.id)
+        Role role = curru.getAuthorities().first()
+
+
+
         if (!u) {
             response.setStatus(400)
             render new ResponseObject("Cet utilisateur n'existe pas", "danger") as JSON
             return
         }
+        if (role.equals(AppConfig.roleModo) && !u.getAuthorities().first().equals(AppConfig.roleUser)) {
+
+            response.setStatus(403)
+            render new ResponseObject("Opération non autorisée", "warning") as JSON
+            return
+        }
+
         render new ResponseObject(u) as JSON
     }
 
-    @Secured("hasRole('ROLE_ADMIN')")
+    @Secured("hasRole('ROLE_ADMIN')||hasRole('ROLE_MODO')")
     def getRoles() {
+
+
+        User u = springSecurityService.currentUser
+        Role role = u.getAuthorities().first()
+        if (role.equals(AppConfig.roleModo)) {
+
+            render new ResponseObject(Arrays.asList(AppConfig.roleUser)) as JSON
+            return
+        }
+
+
         render new ResponseObject(Role.findAll()) as JSON
     }
 

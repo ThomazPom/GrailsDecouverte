@@ -46,9 +46,6 @@
                                     data-target="#creerGroupeModal">
                                 Groupes ✎
                             </button>
-                        </sec:ifAnyGranted>
-
-                        <sec:ifAnyGranted roles="ROLE_ADMIN">
                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#gestionUserModal">
                                 Utilisateurs 👤

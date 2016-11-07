@@ -250,8 +250,8 @@ $(document).ready(function () {
                     if (!form.hasClass("nomodal")) {
 
                         var infocontainer = $("#infoModal").modal("show").find(".infoContainer").html($('<div>', {
-                            class: "alert alert-" + data.status||"",
-                            html: data.message?data.message.replace(new RegExp("\n", 'g'), "<br>"):""
+                            class: "alert alert-" + data.status || "",
+                            html: data.message ? data.message.replace(new RegExp("\n", 'g'), "<br>") : ""
                         }))
                     }
 
@@ -260,8 +260,8 @@ $(document).ready(function () {
                         if (Array.isArray(data)) {
                             $(data).each(function () {
                                 infocontainer.append($('<div>', {
-                                    class: "alert alert-" + this.status||"",
-                                    html: this.message?this.message.replace(new RegExp("\n", 'g'), "<br>"):""
+                                    class: "alert alert-" + this.status || "",
+                                    html: this.message ? this.message.replace(new RegExp("\n", 'g'), "<br>") : ""
                                 }));
                                 fillContainer(this.data);
                             })
@@ -296,7 +296,7 @@ $(document).ready(function () {
                 var selectRoles = form.find("select[name='selectRole']");
 
                 JSONGet("/A_User/getUser/" + select.val(), null, function (data) {
-                    select.find("option[value='" + select.val() + "']").text(data.data.username);
+                    select.find("option[value='" + data.data.id + "']").text(data.data.id + " - " + data.data.username);
                     form.find("[name='username']").val(data.data.username);
                     selectRoles.val(data.data.role);
                 })
@@ -571,15 +571,14 @@ $("a[href='#gEdition']").click(function (event, eventData) {
     })
 });
 
-    if($("#listGroupView").size()>0){
+if ($("#listGroupView").size() > 0) {
     JSONGet('/A_Groupe/getGroupes', null, function (data) {
         var ul = $('#listGroupView').empty();
 
         $(data.data).each(function () {
             ul.append('<li class="list-group-item"><label>' + this.nom + '</label></li>');
         })
-        if($(data.data).size()==0)
-        {
+        if ($(data.data).size() == 0) {
             ul.append('<li class="list-group-item">Aucun groupe à afficher</li>');
 
         }
